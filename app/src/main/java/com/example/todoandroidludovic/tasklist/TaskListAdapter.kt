@@ -1,15 +1,16 @@
+
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.example.todoandroidludovic.R
-import com.example.todoandroidludovic.tasklist.Task
-import kotlinx.android.synthetic.main.fragment_task_list.view.*
+import com.example.todoandroidludovic.network.models.Task
 import kotlinx.android.synthetic.main.item_task.view.*
-import java.util.*
 
 
-class TaskListAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<TaskListAdapter.TaskViewHolder>() {
+class TaskListAdapter : ListAdapter<Task,TaskListAdapter.TaskViewHolder>(DiffCallback()) {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -19,20 +20,37 @@ class TaskListAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<T
 
     }
 
+
+
+
+    class DiffCallback : DiffUtil.ItemCallback<Task>() {
+        override fun areItemsTheSame(oldItem:Task, newItem: Task): Boolean {
+            return oldItem == newItem
+        }
+
+        override fun areContentsTheSame(oldItem:Task, newItem: Task): Boolean {
+            return oldItem == newItem
+
+        }}
+
+    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
+        holder.bind(getItem(position),position)
+    }
+
     var onDeleteTask: ((Task) -> Unit)? = null
 
+    var onEditTask: ((Task) -> Unit)? = null
+
     inner class TaskViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        fun bind(varTask: Task){
+        fun bind(varTask: Task,position:Int){
 
             itemView.apply {
                 task_title.text = varTask.title
-                buttonAndroid.setOnClickListener {
-                    Task(id = UUID.randomUUID().toString(), title = "Task ${taskList.size + 1}")
-                    notifyItemInserted(taskList.size -1)
-                }
-
                 buttonDelete.setOnClickListener {
                     onDeleteTask?.invoke(varTask)
+                }
+                buttonEdit.setOnClickListener{
+                    onEditTask?.invoke(varTask)
                 }
             }
         }
@@ -40,13 +58,6 @@ class TaskListAdapter(private val taskList: List<Task>) : RecyclerView.Adapter<T
     }
 
 
-    override fun getItemCount(): Int {
-        return taskList.size
-    }
-
-    override fun onBindViewHolder(holder: TaskViewHolder, position: Int) {
-        holder.bind(taskList[position])
-    }
 }
 
 

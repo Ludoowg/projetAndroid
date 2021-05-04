@@ -11,3 +11,7 @@ p
 Mapp/src/main/java/com/example/todoandroidludovic/tasklist/TaskListFragment.kt,e/d/ed78094fd9cadee04133b106bfc69279e35d9491
 |
 Lapp/src/main/java/com/example/todoandroidludovic/tasklist/TaskListAdapter.kt,e/a/ea587222d0e563a5f270cd6d53896876198926d6
+q
+Aapp/src/main/java/com/example/todoandroidludovic/tasklist/Task.kt,f/5/f5c86cf972a892b22a864275883244a028fd3ac2
+u
+Eapp/src/main/java/com/example/todoandroidludovic/task/TaskActivity.kt,7/8/78176d10f176a21eef3c041d8c9442b493bb698a
